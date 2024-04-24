@@ -4,13 +4,15 @@ from bs4 import BeautifulSoup as BSoup
 from django.http import HttpResponseServerError
 from news.models import Headline
 
+
 def scrape(request, name):
     try:
         # Clear existing headlines
         Headline.objects.all().delete()
 
         # Set up session with a user agent
-        headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"}
         session = requests.Session()
         session.headers = headers
 
@@ -45,6 +47,7 @@ def scrape(request, name):
     except Exception as e:
         # Handle other unexpected exceptions
         return HttpResponseServerError(f"An unexpected error occurred: {e}")
+
 
 def news_list(request):
     # Retrieve headlines in reverse order
